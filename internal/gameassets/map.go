@@ -6,8 +6,8 @@ import (
 )
 
 type Map struct {
-	x_size uint8
-	y_size uint8
+	XSize uint8
+	YSize uint8
 }
 
 var mapTotalSquares [4]uint16 = [4]uint16{900, 2025, 3600, 6400}
@@ -30,6 +30,6 @@ func GenerateNewMap(newMapSizeOption uint8) *Map {
 
 	var newMapXSize uint8 = newMapSizeSqrtValue + uint8(randomOffsetX)
 	var newMapYSize uint8 = newMapSizeSqrtValue + uint8(randomOffsetY)
-	return &Map{x_size: newMapXSize, y_size: newMapYSize}
+	return &Map{XSize: newMapXSize, YSize: newMapYSize}
 }
 
