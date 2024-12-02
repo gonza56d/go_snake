@@ -11,8 +11,8 @@ type Map struct {
 }
 
 type Location struct {
-	XAt uint8 // 0 -> most left
-	YAt uint8 // 0 -> most bottom
+	XAt int16 // 0 -> most left
+	YAt int16 // 0 -> most bottom
 }
 
 var mapTotalSquares [4]uint16 = [4]uint16{900, 2025, 3600, 6400}

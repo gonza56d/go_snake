@@ -92,3 +92,20 @@ func MoveSnake(snake *Snake, movingDirection snakeMovement) {
 	}
 }
 
+// IsSnakeCrashed checks if the snake has crashed into the map boundaries.
+// 
+// Parameters:
+// - snake (*Snake): A pointer to the Snake, where the head is at index 0.
+// - gameMap (*Map): A pointer to the Map representing the game area dimensions.
+//
+// Returns:
+// - bool: True if the snake's head is outside the map boundaries, false otherwise.
+//
+// Behavior:
+// The function compares the coordinates of the snake's head (XAt, YAt) to the map's size
+// (XSize, YSize). If the head's position is less than 0 or greater than the map's size,
+// the function returns true, indicating a crash. Otherwise, it returns false.
+func IsSnakeCrashed(snake *Snake, gameMap *Map) bool {
+	return (*snake)[0].YAt < 0 || (*snake)[0].XAt < 0 ||
+		(*snake)[0].YAt > int16(gameMap.YSize) || (*snake)[0].XAt > int16(gameMap.XSize)
+}
