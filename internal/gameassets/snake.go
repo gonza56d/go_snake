@@ -29,13 +29,13 @@ func getSnakeFacingDirection(snake *Snake) SnakeMovement {
 	var neckLocation Location = (*snake)[1] 
 	var facingDirection SnakeMovement
 
-	if headLocation.XAt == neckLocation.XAt && headLocation.YAt > neckLocation.YAt {
+	if headLocation.XAt > neckLocation.XAt && headLocation.YAt == neckLocation.YAt {
 		facingDirection = Right
-	} else if headLocation.XAt == neckLocation.XAt && headLocation.YAt < neckLocation.YAt {
+	} else if headLocation.XAt < neckLocation.XAt && headLocation.YAt == neckLocation.YAt {
 		facingDirection = Left	
-	} else if headLocation.YAt == neckLocation.YAt && headLocation.XAt > neckLocation.XAt {
+	} else if headLocation.YAt > neckLocation.YAt && headLocation.XAt == neckLocation.XAt {
 		facingDirection = Up
-	} else if headLocation.YAt == neckLocation.YAt && headLocation.XAt < neckLocation.XAt {
+	} else if headLocation.YAt < neckLocation.YAt && headLocation.XAt == neckLocation.XAt {
 		facingDirection = Down
 	} else {
 		panic("Illegal snake state.")
