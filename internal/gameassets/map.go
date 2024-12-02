@@ -10,6 +10,11 @@ type Map struct {
 	YSize uint8
 }
 
+type Location struct {
+	XAt uint8 // 0 -> most left
+	YAt uint8 // 0 -> most bottom
+}
+
 var mapTotalSquares [4]uint16 = [4]uint16{900, 2025, 3600, 6400}
 
 func GenerateNewMap(newMapSizeOption uint8) *Map {
