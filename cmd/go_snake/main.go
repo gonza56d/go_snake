@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("Press any key to see its value. Press ESC to quit.")
 
 	for {
-		char, key, err := keyboard.GetKey()
+		char, key, err := keyboard.GetSingleKey()
 		if err != nil {
 			// Handle the error but don't exit the program
 			fmt.Println("Error reading key:", err)
