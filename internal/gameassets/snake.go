@@ -4,10 +4,10 @@ import "fmt"
 
 type Snake []Location // Index 0 is the snake's head. Last index is the tail.
 
-type snakeMovement uint8
+type SnakeMovement uint8
 
 const (
-	Up snakeMovement = iota
+	Up SnakeMovement = iota
 	Down
 	Left
 	Right
@@ -24,10 +24,10 @@ const (
 //
 // Panics:
 //   - If the snake is in an illegal state (e.g., head and neck positions do not align).
-func getSnakeFacingDirection(snake *Snake) snakeMovement {
+func getSnakeFacingDirection(snake *Snake) SnakeMovement {
 	var headLocation Location = (*snake)[0]
 	var neckLocation Location = (*snake)[1] 
-	var facingDirection snakeMovement
+	var facingDirection SnakeMovement
 
 	if headLocation.XAt == neckLocation.XAt && headLocation.YAt > neckLocation.YAt {
 		facingDirection = Right
@@ -52,7 +52,7 @@ func getSnakeFacingDirection(snake *Snake) snakeMovement {
 //
 // Returns:
 //   - True if the movement is illegal; false otherwise.
-func isIllegalMovement(facingDirection snakeMovement, movingDirection snakeMovement) bool {
+func isIllegalMovement(facingDirection SnakeMovement, movingDirection SnakeMovement) bool {
 	return (facingDirection == Up && movingDirection == Down) ||
 		(facingDirection == Down && movingDirection == Up) ||
 		(facingDirection == Left && movingDirection == Right) ||
@@ -73,7 +73,7 @@ func isIllegalMovement(facingDirection snakeMovement, movingDirection snakeMovem
 //
 // Panics:
 //   - If an invalid movement direction is provided.
-func MoveSnake(snake *Snake, movingDirection snakeMovement) {
+func MoveSnake(snake *Snake, movingDirection SnakeMovement) {
 	facingDirection := getSnakeFacingDirection(snake)
 	if isIllegalMovement(facingDirection, movingDirection) {
 		movingDirection = facingDirection
