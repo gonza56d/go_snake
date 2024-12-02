@@ -13,7 +13,7 @@ func TestMoveSnakeSuccess(t *testing.T) {
 		movingDirection gameassets.SnakeMovement
 		expected gameassets.Snake
 	}{
-		{
+		{ // snake is facing right and moves up
 			gameassets.Snake{
 				{XAt: 10, YAt: 10},
 				{XAt: 9, YAt: 10},
@@ -28,7 +28,22 @@ func TestMoveSnakeSuccess(t *testing.T) {
 				{XAt: 8, YAt: 10},
 			},
 		},
-		{
+		{ // snake is facing right and moves left (illegal, then it should continue moving right)
+			gameassets.Snake{
+				{XAt: 10, YAt: 10},
+				{XAt: 9, YAt: 10},
+				{XAt: 8, YAt: 10},
+				{XAt: 7, YAt: 10},
+			},
+			gameassets.Left,
+			gameassets.Snake{
+				{XAt: 11, YAt: 10},
+				{XAt: 10, YAt: 10},
+				{XAt: 9, YAt: 10},
+				{XAt: 8, YAt: 10},
+			},
+		},
+		{ // snake is facing up and moves up
 			gameassets.Snake{
 				{XAt: 10, YAt: 10},
 				{XAt: 10, YAt: 9},
@@ -43,7 +58,22 @@ func TestMoveSnakeSuccess(t *testing.T) {
 				{XAt: 10, YAt: 8},
 			},
 		},
-		{
+		{ // snake is facing up and moves down (illegal, then should continue moving up)
+			gameassets.Snake{
+				{XAt: 10, YAt: 10},
+				{XAt: 10, YAt: 9},
+				{XAt: 10, YAt: 8},
+				{XAt: 10, YAt: 7},
+			},
+			gameassets.Down,
+			gameassets.Snake{
+				{XAt: 10, YAt: 11},
+				{XAt: 10, YAt: 10},
+				{XAt: 10, YAt: 9},
+				{XAt: 10, YAt: 8},
+			},
+		},
+		{ // snake is facing up and moves right
 			gameassets.Snake{
 				{XAt: 10, YAt: 10},
 				{XAt: 10, YAt: 9},
@@ -64,8 +94,8 @@ func TestMoveSnakeSuccess(t *testing.T) {
 	for _, test := range tests {
 		gameassets.MoveSnake(&test.snake, test.movingDirection)
 		if !reflect.DeepEqual(test.snake, test.expected) { 
-			t.Errorf("Unexpected snake state after MoveSnake function call.\n" +
-				"Snake: %d\nExpected: %d", test.snake, test.expected)
+			t.Errorf("Unexpected snake state after MoveSnake function call. (Moving %d).\n" +
+				"Snake: %d\nExpected: %d", test.movingDirection, test.snake, test.expected)
 		}
 		if gameassets.IsSnakeCrashed(&test.snake, &gameMap) {
 			t.Error("Snake crashed after legal movement.")
