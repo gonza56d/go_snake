@@ -79,7 +79,7 @@ func MoveSnake(snake *Snake, movingDirection SnakeMovement) {
 		movingDirection = facingDirection
 	}
 
-	for i := 1; i < len(*snake); i++ {
+	for i := len(*snake) - 1; i > 0; i-- { 
 		(*snake)[i] = (*snake)[i-1]
 	}
 
