@@ -1,8 +1,8 @@
-package gameassets
+package gamecomponents
 
 import (
 	"testing"
-	"github.com/gonza56d/go_snake/internal/gameassets"
+	"github.com/gonza56d/go_snake/internal/gamecomponents"
 )
 
 func TestGenerateNewMapSuccess(t *testing.T) {
@@ -17,7 +17,7 @@ func TestGenerateNewMapSuccess(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := gameassets.GenerateNewMap(test.mapSizeOption)
+		result := gamecomponents.GenerateNewMap(test.mapSizeOption)
 
 		if result.XSize < test.expected[0] || result.XSize > test.expected[1] ||
 			result.YSize < test.expected[0] || result.YSize > test.expected[1] {

@@ -1,4 +1,4 @@
-package gameassets
+package gamecomponents
 
 import "fmt"
 
