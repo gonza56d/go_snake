@@ -271,3 +271,58 @@ func TestMoveSnakeSuccess(t *testing.T) {
 	}
 }
 
+func TestMoveSnakeCrash(t *testing.T) {
+	tests := []struct {
+		snake gamecomponents.Snake
+		movingDirection gamecomponents.SnakeMovement
+	}{
+		{ // moving UP when it's already at Y=30
+			gamecomponents.Snake{
+				{XAt: 26, YAt:30},
+				{XAt: 26, YAt:29},
+				{XAt: 26, YAt:28},
+				{XAt: 26, YAt:27},
+			},
+			gamecomponents.Up,
+		},
+		{ // moving RIGHT when it's already at X=30
+			gamecomponents.Snake{
+				{XAt: 30, YAt:29},
+				{XAt: 29, YAt:29},
+				{XAt: 28, YAt:29},
+				{XAt: 27, YAt:29},
+			},
+			gamecomponents.Right,
+		},
+		{ // moving DOWN when it's already at Y=0
+			gamecomponents.Snake{
+				{XAt: 3, YAt:0},
+				{XAt: 3, YAt:1},
+				{XAt: 3, YAt:2},
+				{XAt: 3, YAt:3},
+			},
+			gamecomponents.Down,
+		},
+		{ // moving LEFT when it's already at X=0
+			gamecomponents.Snake{
+				{XAt: 0, YAt:4},
+				{XAt: 1, YAt:4},
+				{XAt: 2, YAt:4},
+				{XAt: 3, YAt:4},
+			},
+			gamecomponents.Left,
+		},
+	}
+
+	var gameMap gamecomponents.Map = gamecomponents.Map{XSize: 30, YSize: 30}
+	for _, test := range tests{
+		if gamecomponents.IsSnakeCrashed(&test.snake, &gameMap) {
+			t.Error("Snake should NOT have crashed before moving.")
+		}
+		gamecomponents.MoveSnake(&test.snake, test.movingDirection)
+		if !gamecomponents.IsSnakeCrashed(&test.snake, &gameMap) {
+			t.Error("Snake should have crashed after moving.")
+		}
+	}
+}
+
