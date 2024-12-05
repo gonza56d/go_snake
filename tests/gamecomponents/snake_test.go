@@ -271,7 +271,38 @@ func TestMoveSnakeSuccess(t *testing.T) {
 	}
 }
 
-func TestMoveSnakeCrash(t *testing.T) {
+func TestMoveSnakeCrashAgainstOwnBody(t *testing.T) {
+	tests := []struct {
+		snake gamecomponents.Snake
+		movingDirection gamecomponents.SnakeMovement
+	}{
+		{ // crashing with themselves facing UP
+			gamecomponents.Snake{
+				{XAt: 20, YAt: 20}, //  XXX
+				{XAt: 20, YAt: 19}, //   OX
+				{XAt: 21, YAt: 19}, //   XX
+				{XAt: 21, YAt: 20}, //
+				{XAt: 21, YAt: 21}, //
+				{XAt: 20, YAt: 21}, //
+				{XAt: 19, YAt: 21}, //
+			},
+			gamecomponents.Up,
+		},
+	}
+
+	var gameMap gamecomponents.Map = gamecomponents.Map{XSize: 30, YSize: 30}
+	for _, test := range tests{
+		if gamecomponents.IsSnakeCrashed(&test.snake, &gameMap) {
+			t.Error("Snake should NOT have crashed before moving.")
+		}
+		gamecomponents.MoveSnake(&test.snake, test.movingDirection)
+		if !gamecomponents.IsSnakeCrashed(&test.snake, &gameMap) {
+			t.Error("Snake should have crashed after moving.")
+		}
+	}
+}
+
+func TestMoveSnakeCrashAgainstMapWall(t *testing.T) {
 	tests := []struct {
 		snake gamecomponents.Snake
 		movingDirection gamecomponents.SnakeMovement
