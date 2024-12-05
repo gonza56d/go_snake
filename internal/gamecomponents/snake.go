@@ -13,6 +13,55 @@ const (
 	Right
 )
 
+// getFacingDirection determines the direction of movement (facing) 
+// between two coordinates in a 2D space. It is used to calculate the 
+// facing direction of the snake's head or tail, which is essential for 
+// growing or moving the snake in the game.
+//
+// Parameters:
+// - pointingCoord (Location): The coordinate whose direction is to be determined.
+// - previousCoord (Location): The coordinate being compared to.
+//
+// Returns:
+// - SnakeMovement: The direction (`Right`, `Left`, `Up`, or `Down`) 
+//   that `pointingCoord` is facing relative to `previousCoord`.
+//
+// Panics:
+// - If the two coordinates are not aligned horizontally or vertically 
+//   (invalid snake state), the function will panic.
+//
+// Example:
+//   pointingCoord := Location{XAt: 3, YAt: 2}
+//   previousCoord := Location{XAt: 2, YAt: 2}
+//   direction := getFacingDirection(pointingCoord, previousCoord)
+//   fmt.Println(direction) // Output: Right
+func getFacingDirection(pointingCoord Location, previousCoord Location) SnakeMovement {
+	if pointingCoord.XAt > previousCoord.XAt && pointingCoord.YAt == previousCoord.YAt {
+		return Right
+	} else if pointingCoord.XAt < previousCoord.XAt && pointingCoord.YAt == previousCoord.YAt {
+		return Left	
+	} else if pointingCoord.YAt > previousCoord.YAt && pointingCoord.XAt == previousCoord.XAt {
+		return Up
+	} else if pointingCoord.YAt < previousCoord.YAt && pointingCoord.XAt == previousCoord.XAt {
+		return Down
+	} else {
+		panic("Illegal snake state.")
+	}
+}
+
+// Grow the snake by reference.
+// Appends one segment after snake's tail.
+func Grow(snake *Snake) {
+	snakeLength := len(*snake)
+	tail := (*snake)[snakeLength - 1] 
+	preTail := (*snake)[snakeLength - 2]
+
+	tailFacingDirection := getFacingDirection(tail, preTail)
+	if tailFacingDirection == Up {
+		*snake = append(*snake, Location{XAt: tail.XAt, YAt: tail.YAt + 1})
+	}
+}
+
 // getSnakeFacingDirection determines the direction the snake's head is facing
 // based on the position of its head and neck.
 //
@@ -27,20 +76,7 @@ const (
 func getSnakeFacingDirection(snake *Snake) SnakeMovement {
 	var headLocation Location = (*snake)[0]
 	var neckLocation Location = (*snake)[1] 
-	var facingDirection SnakeMovement
-
-	if headLocation.XAt > neckLocation.XAt && headLocation.YAt == neckLocation.YAt {
-		facingDirection = Right
-	} else if headLocation.XAt < neckLocation.XAt && headLocation.YAt == neckLocation.YAt {
-		facingDirection = Left	
-	} else if headLocation.YAt > neckLocation.YAt && headLocation.XAt == neckLocation.XAt {
-		facingDirection = Up
-	} else if headLocation.YAt < neckLocation.YAt && headLocation.XAt == neckLocation.XAt {
-		facingDirection = Down
-	} else {
-		panic("Illegal snake state.")
-	}
-	return facingDirection
+	return getFacingDirection(headLocation, neckLocation)
 }
 
 // isIllegalMovement checks if a proposed movement direction is illegal
@@ -99,13 +135,18 @@ func MoveSnake(snake *Snake, movingDirection SnakeMovement) {
 // - gameMap (*Map): A pointer to the Map representing the game area dimensions.
 //
 // Returns:
-// - bool: True if the snake's head is outside the map boundaries, false otherwise.
-//
-// Behavior:
-// The function compares the coordinates of the snake's head (XAt, YAt) to the map's size
-// (XSize, YSize). If the head's position is less than 0 or greater than the map's size,
-// the function returns true, indicating a crash. Otherwise, it returns false.
+// - bool: True if the snake's head is outside the map boundaries or overlapping their own body, false otherwise.
 func IsSnakeCrashed(snake *Snake, gameMap *Map) bool {
-	return (*snake)[0].YAt < 0 || (*snake)[0].XAt < 0 ||
+	crashedAgainstWall := (*snake)[0].YAt < 0 || (*snake)[0].XAt < 0 ||
 		(*snake)[0].YAt > int16(gameMap.YSize) || (*snake)[0].XAt > int16(gameMap.XSize)
+	if crashedAgainstWall {
+		return true
+	}
+	snakeHead := (*snake)[0]
+	for i := 1; i < len(*snake); i++ {
+		if snakeHead == (*snake)[i] {
+			return true
+		}
+	}
+	return false
 }
