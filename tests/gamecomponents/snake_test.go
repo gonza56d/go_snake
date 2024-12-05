@@ -288,6 +288,30 @@ func TestMoveSnakeCrashAgainstOwnBody(t *testing.T) {
 			},
 			gamecomponents.Up,
 		},
+		{ // crashing with themselves facing RIGHT
+			gamecomponents.Snake{
+				{XAt: 15, YAt: 15}, //
+				{XAt: 14, YAt: 15}, //  XXX
+				{XAt: 14, YAt: 16}, //  XOX
+				{XAt: 15, YAt: 16}, //    X
+				{XAt: 16, YAt: 16}, //
+				{XAt: 16, YAt: 15}, //
+				{XAt: 16, YAt: 14}, //
+			},
+			gamecomponents.Right,
+		},
+		{ // crashing with themselves facing DOWN
+			gamecomponents.Snake{
+				{XAt: 15, YAt: 15}, //
+				{XAt: 15, YAt: 16}, //  XX
+				{XAt: 16, YAt: 16}, //  OX
+				{XAt: 16, YAt: 15}, // XXX
+				{XAt: 16, YAt: 14}, // 
+				{XAt: 15, YAt: 14}, // 
+				{XAt: 14, YAt: 14}, //
+			},
+			gamecomponents.Down,
+		},
 	}
 
 	var gameMap gamecomponents.Map = gamecomponents.Map{XSize: 30, YSize: 30}
