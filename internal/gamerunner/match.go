@@ -1,8 +1,6 @@
 package gamerunner
 
-import (
-	"github.com/gonza56d/go_snake/internal/gamecomponents"
-)
+import "github.com/gonza56d/go_snake/internal/gamecomponents"
 
 // Match holds data from current game going on.
 // Interacts with game components as snake moves (MoveSnake function is called).
