@@ -4,4 +4,5 @@ run:
 
 test:
 	go test ./tests/gamecomponents
+	go test ./tests/gamerunner
 
