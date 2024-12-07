@@ -1,11 +1,46 @@
 package gamerunner
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/gonza56d/go_snake/internal/gamecomponents"
 	"github.com/gonza56d/go_snake/internal/gamerunner"
 )
+
+func TestNewMatch(t *testing.T) {
+	tests := make(map[uint8][2]uint8)
+	tests[0] = [2]uint8{25, 35}
+	tests[1] = [2]uint8{40, 50}
+	tests[2] = [2]uint8{55, 65}
+	tests[3] = [2]uint8{75, 85}
+
+	for key, value := range tests {
+		match := gamerunner.NewMatch(key) 
+		if len(*match.Snake) != 4 {
+			t.Error("Initial snake length must be 4.")
+		}
+		if match.Score != 0 {
+			t.Error("Initial score must be 0.")
+		}
+		if !(match.GameMap.XSize == value[0] && match.GameMap.YSize == value[1] || 
+			match.GameMap.XSize == value[1] && match.GameMap.YSize == value[0]) {
+			t.Errorf("Initial map size for option %d should be %dx%d or vice versa. \n" +
+				"Found %dx%d.", key, value[0], value[1], match.GameMap.XSize, match.GameMap.YSize)
+		}
+		if !reflect.DeepEqual(
+			*match.Snake,
+			gamecomponents.Snake{
+				{XAt: int16(match.GameMap.XSize / 2), YAt: int16(match.GameMap.YSize / 2)},
+				{XAt: int16(match.GameMap.XSize / 2), YAt: int16(match.GameMap.YSize / 2) - 1},
+				{XAt: int16(match.GameMap.XSize / 2), YAt: int16(match.GameMap.YSize / 2) - 2},
+				{XAt: int16(match.GameMap.XSize / 2), YAt: int16(match.GameMap.YSize / 2) - 3},
+			},
+		) {
+			t.Error("Snake is not positioned at the center of map.")
+		}
+	}
+}
 
 func TestMakeMoveAndNothingHappens(t *testing.T) {
 	tests := []struct{
