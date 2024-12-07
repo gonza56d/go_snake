@@ -13,6 +13,16 @@ const (
 	Right
 )
 
+func GenerateNewSnake(gameMap Map) *Snake {
+	halfX, halfY := gameMap.XSize / 2, gameMap.YSize / 2
+	return &Snake{
+		Location{XAt: int16(halfX), YAt: int16(halfY)},
+		Location{XAt: int16(halfX), YAt: int16(halfY) - 1},
+		Location{XAt: int16(halfX), YAt: int16(halfY) - 2},
+		Location{XAt: int16(halfX), YAt: int16(halfY) - 3},
+	}
+}
+
 // getFacingDirection determines the direction of movement (facing) 
 // between two coordinates in a 2D space. It is used to calculate the 
 // facing direction of the snake's head or tail, which is essential for 
