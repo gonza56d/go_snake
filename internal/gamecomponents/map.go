@@ -19,7 +19,7 @@ type Location struct {
 var mapTotalSquares [4]uint16 = [4]uint16{900, 2025, 3600, 6400}
 
 func GenerateNewMap(newMapSizeOption uint8) *Map {
-	 if newMapSizeOption > 3 {
+	if newMapSizeOption > 3 {
 		panic("mapSize options are between 0 (smaller) and 3 (biggest).")
 	}
 	var newMapSize uint16 = mapTotalSquares[newMapSizeOption]

@@ -149,14 +149,16 @@ func MoveSnake(snake *Snake, movingDirection SnakeMovement) {
 func IsSnakeCrashed(snake *Snake, gameMap *Map) bool {
 	crashedAgainstWall := (*snake)[0].YAt < 0 || (*snake)[0].XAt < 0 ||
 		(*snake)[0].YAt > int16(gameMap.YSize) || (*snake)[0].XAt > int16(gameMap.XSize)
+
 	if crashedAgainstWall {
 		return true
 	}
-	snakeHead := (*snake)[0]
-	for i := 1; i < len(*snake); i++ {
-		if snakeHead == (*snake)[i] {
-			return true
-		}
+
+	snakeLocations := make(map[Location]struct{})
+	for _, segment := range (*snake)[1:] {
+		snakeLocations[segment] = struct{}{}
 	}
-	return false
+	snakeHead := (*snake)[0]
+	_, isSnakeHeadOverlappingBody := snakeLocations[snakeHead]
+	return isSnakeHeadOverlappingBody  
 }
