@@ -7,12 +7,12 @@ import "github.com/gonza56d/go_snake/internal/gamecomponents"
 type Match struct {
 	GameMap *gamecomponents.Map
 	Snake   *gamecomponents.Snake
-	Score   uint64
+	Score    uint64
 }
 
 func NewMatch(mapSize uint8) *Match {
 	gameMap := gamecomponents.GenerateNewMap(mapSize)
-	snake := gamecomponents.GenerateNewSnake(*gameMap)
+	snake := gamecomponents.GenerateNewSnake(gameMap)
 	return &Match{
 		GameMap: gameMap,
 		Snake:   snake,
@@ -29,7 +29,7 @@ func (m *Match) MakeMove(direction gamecomponents.SnakeMovement) bool {
 	if snakeHeadAtFood { 
 		gamecomponents.Grow(m.Snake)
 		m.Score++
-		m.GameMap.FoodAt = *gamecomponents.SpawnFood(m.Snake, m.GameMap)
+		gamecomponents.MoveFood(m.GameMap.FoodAt, m.Snake, m.GameMap)
 	}
 	return gamecomponents.IsSnakeCrashed(m.Snake, m.GameMap)
 }

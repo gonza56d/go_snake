@@ -15,7 +15,7 @@ func TestMakeMoveAndNothingHappens(t *testing.T) {
 		{
 			gamecomponents.Up,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 1, YAt: 1}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 1, YAt: 1}},
 				Score: uint64(3),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -28,7 +28,7 @@ func TestMakeMoveAndNothingHappens(t *testing.T) {
 		{
 			gamecomponents.Right,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 1, YAt: 1}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 1, YAt: 1}},
 				Score: uint64(3),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -41,7 +41,7 @@ func TestMakeMoveAndNothingHappens(t *testing.T) {
 		{
 			gamecomponents.Left,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 1, YAt: 1}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 1, YAt: 1}},
 				Score: uint64(3),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -54,7 +54,7 @@ func TestMakeMoveAndNothingHappens(t *testing.T) {
 		{
 			gamecomponents.Down,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 1, YAt: 1}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 1, YAt: 1}},
 				Score: uint64(3),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -87,7 +87,7 @@ func TestMakeMoveAndEatFood(t *testing.T) {
 		{
 			gamecomponents.Up,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 5, YAt: 6}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 5, YAt: 6}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -100,7 +100,7 @@ func TestMakeMoveAndEatFood(t *testing.T) {
 		{
 			gamecomponents.Right,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 6, YAt: 5}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 6, YAt: 5}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -113,7 +113,7 @@ func TestMakeMoveAndEatFood(t *testing.T) {
 		{
 			gamecomponents.Left,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 4, YAt: 5}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 4, YAt: 5}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -126,7 +126,7 @@ func TestMakeMoveAndEatFood(t *testing.T) {
 		{
 			gamecomponents.Down,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 5, YAt: 4}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 5, YAt: 4}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 5},
@@ -159,7 +159,7 @@ func TestMakeMoveAndGameOver(t *testing.T) {
 		{
 			gamecomponents.Up,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 5, YAt: 6}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 5, YAt: 6}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 30},
@@ -172,7 +172,7 @@ func TestMakeMoveAndGameOver(t *testing.T) {
 		{
 			gamecomponents.Right,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 6, YAt: 5}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 6, YAt: 5}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 30, YAt: 5},
@@ -185,7 +185,7 @@ func TestMakeMoveAndGameOver(t *testing.T) {
 		{
 			gamecomponents.Left,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 4, YAt: 5}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 4, YAt: 5}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 0, YAt: 5},
@@ -198,7 +198,7 @@ func TestMakeMoveAndGameOver(t *testing.T) {
 		{
 			gamecomponents.Down,
 			&gamerunner.Match{
-				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: gamecomponents.Food{XAt: 5, YAt: 4}},
+				GameMap: &gamecomponents.Map{XSize: 30, YSize: 30, FoodAt: &gamecomponents.Food{XAt: 5, YAt: 4}},
 				Score: uint64(6),
 				Snake: &gamecomponents.Snake{
 					gamecomponents.Location{XAt: 5, YAt: 0},

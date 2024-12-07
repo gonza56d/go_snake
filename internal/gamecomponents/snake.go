@@ -13,7 +13,7 @@ const (
 	Right
 )
 
-func GenerateNewSnake(gameMap Map) *Snake {
+func GenerateNewSnake(gameMap *Map) *Snake {
 	halfX, halfY := gameMap.XSize / 2, gameMap.YSize / 2
 	return &Snake{
 		Location{XAt: int16(halfX), YAt: int16(halfY)},

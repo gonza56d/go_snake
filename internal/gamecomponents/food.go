@@ -4,7 +4,7 @@ import "math/rand"
 
 type Food Location
 
-func SpawnFood(snake *Snake, gameMap *Map) *Food {
+func MoveFood(food *Food, snake *Snake, gameMap *Map) {
 	var xRand, yRand int16	
 
 	for {
@@ -14,7 +14,8 @@ func SpawnFood(snake *Snake, gameMap *Map) *Food {
 			break
 		}
 	}
-	return &Food{XAt: xRand, YAt: yRand}
+	food.XAt = xRand
+	food.YAt = xRand
 }
 
 func overlapsSnake(xRand int16, yRand int16, snake *Snake) bool {

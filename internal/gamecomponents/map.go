@@ -6,9 +6,9 @@ import (
 )
 
 type Map struct {
-	XSize uint8
-	YSize uint8
-	FoodAt Food;
+	XSize   uint8
+	YSize   uint8
+	FoodAt *Food;
 }
 
 type Location struct {
