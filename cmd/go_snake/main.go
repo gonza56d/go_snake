@@ -64,6 +64,13 @@ func main() {
 			select {
 			case <-ticker.C:
 				match.MakeMove(movement)
+				fmt.Println("\033[H\033[2J")
+				for _, segment := range *match.Snake {
+					screen[segment.XAt][segment.YAt] = 'X'
+				}
+				for x := range screen {
+					fmt.Println(screen[x])
+				}
 			case newMovement := <-movementChannel:
 				movement = newMovement
 			}
