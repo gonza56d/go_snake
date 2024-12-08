@@ -24,26 +24,28 @@ func main() {
 		'D': gamecomponents.Right,
 	}
 	// initial draw for screen (walls)
-	maxX := match.GameMap.XSize + 2
-	maxY := match.GameMap.YSize + 2
-	screen := make([]byte, 7482, 7482)
-	fmt.Println((maxX + 1) ^ maxY)
-	for x := range(maxX+1) {
-		for y := range(maxY) {
-			if x == maxX + 1 {
-				screen[x+y] = '\n' // line break (next y)
-			} else if (x==0 && y==0) || (x==0 && y==maxY) || (x==maxX && y==0) || (x==maxX && y==maxY) {
-				screen[x+y] = 'X' // corners
-			} else if x == 0 || x == match.GameMap.XSize + 1 { 
-				screen[x+y] = '-' // bottom/top walls
-			} else if y == 0 || y == match.GameMap.YSize + 1 {
-				screen[x+y] = 'l' // side walls
+	maxX := int(match.GameMap.XSize) + 2
+	maxY := int(match.GameMap.YSize) + 2
+	screen := make([][]byte, maxX+1)
+	for i := range screen {
+		screen[i] = make([]byte, maxY+1)
+	}
+	for x := 0; x <= maxX; x++ {
+		for y := 0; y <= maxY; y++ {
+			if (x==0 && y==0) || (x==0 && y==maxY) || (x==maxX && y==0) || (x==maxX && y==maxY) {
+				screen[x][y] = 'X' // corners
+			} else if x == 0 || x == maxX { 
+				screen[x][y] = '-' // bottom/top walls
+			} else if y == 0 || y == maxY {
+				screen[x][y] = 'l' // side walls
 			} else {
-				screen[x+y] = ' ' // blank spaces for snake & food
+				screen[x][y] = ' ' // blank spaces for snake & food
 			}
 		}
 	}
-	fmt.Println(string(screen))
+	for x := range screen {
+		fmt.Println(string(screen[x]))
+	}
 
 	// Initialize the keyboard listener
 	if err := keyboard.Open(); err != nil {

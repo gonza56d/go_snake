@@ -13,6 +13,9 @@ type Match struct {
 func NewMatch(mapSize uint8) *Match {
 	gameMap := gamecomponents.GenerateNewMap(mapSize)
 	snake := gamecomponents.GenerateNewSnake(gameMap)
+	food := &gamecomponents.Food{XAt: 0, YAt: 0}
+	gamecomponents.MoveFood(food, snake, gameMap)
+	gameMap.FoodAt = food
 	return &Match{
 		GameMap: gameMap,
 		Snake:   snake,
