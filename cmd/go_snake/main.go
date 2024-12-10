@@ -26,9 +26,9 @@ func main() {
 	// initial draw for screen (walls)
 	maxX := int(match.GameMap.XSize) + 2
 	maxY := int(match.GameMap.YSize) + 2
-	screen := make([][]byte, maxX+1)
+	screen := make([][]rune, maxX+1)
 	for i := range screen {
-		screen[i] = make([]byte, maxY+1)
+		screen[i] = make([]rune, maxY+1)
 	}
 	for x := 0; x <= maxX; x++ {
 		for y := 0; y <= maxY; y++ {
@@ -63,13 +63,16 @@ func main() {
 		for {
 			select {
 			case <-ticker.C:
+				snakeTail := (*match.Snake)[len(*match.Snake)-1]
+				screen[snakeTail.XAt][snakeTail.YAt] = ' '
 				match.MakeMove(movement)
 				fmt.Println("\033[H\033[2J")
 				for _, segment := range *match.Snake {
 					screen[segment.XAt][segment.YAt] = 'X'
 				}
+				screen[match.GameMap.FoodAt.XAt][match.GameMap.FoodAt.YAt] = '*'
 				for x := range screen {
-					fmt.Println(screen[x])
+					fmt.Println(string(screen[x]))
 				}
 			case newMovement := <-movementChannel:
 				movement = newMovement
