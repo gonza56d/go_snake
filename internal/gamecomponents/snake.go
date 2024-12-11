@@ -67,9 +67,19 @@ func Grow(snake *Snake) {
 	preTail := (*snake)[snakeLength - 2]
 
 	tailFacingDirection := getFacingDirection(tail, preTail)
-	if tailFacingDirection == Up {
-		*snake = append(*snake, Location{XAt: tail.XAt, YAt: tail.YAt + 1})
+	newSegment := Location{XAt: tail.XAt, YAt: tail.YAt}
+
+	switch tailFacingDirection {
+	case Up:
+		newSegment.YAt++
+	case Down:
+		newSegment.YAt--
+	case Left:
+		newSegment.XAt--
+	case Right:
+		newSegment.XAt++
 	}
+	*snake = append(*snake, newSegment)
 }
 
 // getSnakeFacingDirection determines the direction the snake's head is facing

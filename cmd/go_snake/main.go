@@ -14,14 +14,14 @@ func main() {
 	match := gamerunner.NewMatch(3)
 	nextMovement := gamecomponents.Up
 	movementsMap := map[rune]gamecomponents.SnakeMovement{
-		'w': gamecomponents.Up,
-		'W': gamecomponents.Up,
-		'a': gamecomponents.Left,
-		'A': gamecomponents.Left,
-		's': gamecomponents.Down,
-		'S': gamecomponents.Down,
-		'd': gamecomponents.Right,
-		'D': gamecomponents.Right,
+		'w': gamecomponents.Left,
+		'W': gamecomponents.Left,
+		'a': gamecomponents.Down,
+		'A': gamecomponents.Down,
+		's': gamecomponents.Right,
+		'S': gamecomponents.Right,
+		'd': gamecomponents.Up,
+		'D': gamecomponents.Up,
 	}
 	// initial draw for screen (walls)
 	maxX := int(match.GameMap.XSize) + 2
@@ -37,7 +37,7 @@ func main() {
 			} else if x == 0 || x == maxX { 
 				screen[x][y] = '-' // bottom/top walls
 			} else if y == 0 || y == maxY {
-				screen[x][y] = 'l' // side walls
+				screen[x][y] = '|' // side walls
 			} else {
 				screen[x][y] = ' ' // blank spaces for snake & food
 			}
@@ -56,21 +56,27 @@ func main() {
 	movementChannel := make(chan gamecomponents.SnakeMovement, 1)
 
 	go func() {
-		ticker := time.NewTicker(100 * time.Millisecond)
+		ticker := time.NewTicker(60 * time.Millisecond)
 		defer ticker.Stop()
 
 		movement := nextMovement
+		gameLoop:
 		for {
 			select {
 			case <-ticker.C:
 				snakeTail := (*match.Snake)[len(*match.Snake)-1]
-				screen[snakeTail.XAt][snakeTail.YAt] = ' '
-				match.MakeMove(movement)
-				fmt.Println("\033[H\033[2J")
-				for _, segment := range *match.Snake {
-					screen[segment.XAt][segment.YAt] = 'X'
+				screen[snakeTail.XAt+1][snakeTail.YAt+1] = ' '
+				crashed := match.MakeMove(movement)
+				if crashed {
+					break gameLoop
 				}
-				screen[match.GameMap.FoodAt.XAt][match.GameMap.FoodAt.YAt] = '*'
+				fmt.Println("\033[H\033[2J")
+				snake := *match.Snake
+				screen[snake[0].XAt+1][snake[0].YAt+1] = 'O'
+				for _, segment := range snake[1:] {
+					screen[segment.XAt+1][segment.YAt+1] = 'X'
+				}
+				screen[match.GameMap.FoodAt.XAt+1][match.GameMap.FoodAt.YAt+1] = '*'
 				for x := range screen {
 					fmt.Println(string(screen[x]))
 				}
@@ -78,6 +84,7 @@ func main() {
 				movement = newMovement
 			}
 		}
+		fmt.Printf("X.X Snake crashed X.X\nGame over!\nYour score: %d\n", match.Score)
 	}()
 
 	for {
